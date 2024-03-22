@@ -26,7 +26,7 @@ if (route.params.slug) {
 const { data, pending, error, refresh } = useFetch(
   "https://project.dcsgroup.com.ro/wp-json/wp/v2/pages",
   {
-    query: { slug: slug.value }, // Provide default slug if empty
+    query: { slug: slug.value },
   }
 );
 </script>
