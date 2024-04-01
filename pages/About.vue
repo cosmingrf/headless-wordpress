@@ -1,22 +1,22 @@
 <template>
-  <TopNav />
-  <template v-for="layout in data[0].acf.flexible">
-    <Flexible :layout="layout" />
-  </template>
+  <div v-if="page" class="page">
+    <h1>{{ page.title.rendered }}</h1>
+    <div v-if="page.content" v-html="page.content.rendered"></div>
+
+    <template v-for="layout in page.acf.flexible">
+      <Flexible :layout="layout" />
+    </template>
+  </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import Flexible from "~/components/Flexible.vue";
-const route = useRoute();
-const slug = ref();
+<script lang="ts" setup>
+import useWpApi from "~~/composables/useWpApi";
 
-slug.value = "about";
+const slug = "about";
+const { data: pages } = await useWpApi().getPageBySlug(slug);
+const page = pages.value?.[0];
 
-const { data, pending, error, refresh } = useFetch(
-  "https://project.dcsgroup.com.ro/wp-json/wp/v2/pages",
-  {
-    query: { slug: slug.value },
-  }
-);
+useHead({
+  title: page?.title.rendered,
+});
 </script>

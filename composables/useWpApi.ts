@@ -1,6 +1,7 @@
 
 
 import { Post } from "~~/types/post";
+import { Page } from "~~/types/page";
 
 export default () => {
   const config = useRuntimeConfig();
@@ -10,7 +11,7 @@ export default () => {
     return useFetch<T>(`${WP_URL}/wp-json/wp/v2/${endpoint}`);
   };
 
-
+ 
 
   const getPosts = async (
     category?: number,
@@ -25,6 +26,7 @@ export default () => {
     return get<Post[]>(query);
   };
 
+
   const getPost = async (slug: string) => {
     return get<Post[]>(`posts?slug=${slug}&_embed=1`);
   };
@@ -33,15 +35,25 @@ export default () => {
     return get<any>(`categories`);
   };
 
-  const getCatgory = async (slug: string) => {
+  const getCategory = async (slug: string) => {
     return get<any>(`categories?slug=${slug}`);
   };
+
+  const getPages = async () => {
+  return get<Page[]>(`pages`);
+  };
+  
+  const getPageBySlug = async (slug: string) => {
+  return get<Page[]>(`pages?slug=${slug}`);
+};
 
   return {
     get,
     getPosts,
     getPost,
     getCatgories,
-    getCatgory,
+    getCategory,
+    getPages,
+    getPageBySlug
   };
 };

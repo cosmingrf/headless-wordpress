@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const params = useRoute().params;
 
-const { data: categories, error } = await useWpApi().getCatgory(
+const { data: categories, error } = await useWpApi().getCategory(
   params.slug as string
 );
 const category = categories.value[0];
